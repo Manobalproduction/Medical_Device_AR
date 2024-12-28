@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web-based AR with Model-Viewer</title>
-    <!-- Import Model-Viewer from Google -->
+    <!-- Import Model-Viewer -->
     <script type="module">
         import '@google/model-viewer';
     </script>
@@ -15,7 +15,7 @@
 
     <!-- Model Viewer -->
     <model-viewer 
-        src="model.glb"  <!-- Path to your model -->
+        src="model.glb"  <!-- Path to your 3D model -->
         alt="A 3D model"
         auto-rotate
         camera-controls
@@ -23,6 +23,8 @@
         ar-modes="webxr scene-viewer quick-look"
         style="width: 100%; height: 500px;">
     </model-viewer>
+
+    <p>View this model in AR by tapping the AR icon in the top-right corner!</p>
 
 </body>
 </html>
