@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web-based AR with Model-Viewer</title>
-    <!-- Import Model-Viewer -->
+    <title>View the 3D Model in AR</title>
+    <!-- Model Viewer Script -->
     <script type="module">
         import '@google/model-viewer';
     </script>
@@ -15,7 +15,7 @@
 
     <!-- Model Viewer -->
     <model-viewer 
-        src="model.glb"  <!-- Path to your 3D model -->
+        src="model.glb"  <!-- Path to your model, ensure model.glb is in the same folder as this HTML -->
         alt="A 3D model"
         auto-rotate
         camera-controls
