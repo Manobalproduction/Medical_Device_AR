@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markerless AR</title>
-   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <title>AR 3D Model Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.0.0/aframe/build/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js@4.0.0/dist/aframe-ar.js"></script>
 </head>
-<body>
+<body style="margin: 0; overflow: hidden;">
 
-    <h1>View 3D Model in Markerless AR</h1>
+    <!-- A-Frame scene -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <!-- Define a marker for AR -->
+        <a-marker preset="hiro">
+            <!-- Load 3D model (replace with your model's URL) -->
+            <a-entity
+                gltf-model="url(https://your-repository-link/3dmodel.glb)"
+                scale="0.5 0.5 0.5"
+                position="0 0 0"
+                rotation="0 180 0">
+            </a-entity>
+        </a-marker>
 
-    <!-- Use it like any other HTML element -->
-<model-viewer alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum" src="shared-assets/models/NeilArmstrong.glb" ar environment-image="shared-assets/environments/moon_1k.hdr" poster="shared-assets/models/NeilArmstrong.webp" shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
-
-    <p>Tap the AR icon to view the model in AR!</p>
+        <!-- Camera -->
+        <a-entity camera></a-entity>
+    </a-scene>
 
 </body>
 </html>
