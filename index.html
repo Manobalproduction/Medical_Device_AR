@@ -3,34 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markerless AR with AR.js</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js/aframe/build/aframe-ar.min.js"></script>
+    <title>AR with Google Model Viewer</title>
+    <!-- Import Model Viewer -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@1.9.0/dist/model-viewer.min.js"></script>
     <style>
         body {
             margin: 0;
             overflow: hidden;
         }
+        #ar-button {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            z-index: 10;
+            cursor: pointer;
+        }
+        model-viewer {
+            width: 100%;
+            height: 100vh;
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <a-scene 
-        embedded
-        arjs="sourceType: webcam; debugUIEnabled: false;"
-        vr-mode-ui="enabled: false">
-        
-        <!-- Add a light source -->
-        <a-light type="ambient" intensity="1"></a-light>
-        
-        <!-- Add your 3D model -->
-        <a-entity 
-            gltf-model="model.glb" 
-            position="0 0 -3" 
-            scale="0.5 0.5 0.5">
-        </a-entity>
+    <!-- Button to activate AR -->
+    <button id="ar-button">View in AR</button>
 
-        <!-- Camera setup -->
-        <a-camera gps-camera></a-camera>
-    </a-scene>
+    <!-- Model Viewer with AR settings -->
+    <model-viewer id="model-viewer" src="model.glb" alt="3D model"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls auto-rotate>
+    </model-viewer>
+
+    <script>
+        // Show AR button when model-viewer is loaded
+        const modelViewer = document.getElementById('model-viewer');
+        const arButton = document.getElementById('ar-button');
+
+        arButton.addEventListener('click', () => {
+            modelViewer.enterAR();
+            arButton.style.display = 'none'; // Hide the button after AR starts
+        });
+
+        // Make sure the model-viewer is loaded
+        modelViewer.addEventListener('load', () => {
+            arButton.style.display = 'block'; // Show AR button when model is loaded
+        });
+    </script>
 </body>
 </html>
