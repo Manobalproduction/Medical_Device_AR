@@ -1,29 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markerless AR 3D Model Viewer</title>
-    <!-- A-Frame -->
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <!-- AR.js for markerless AR (using WebXR) -->
-    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.0.0/aframe/build/aframe-ar.js"></script>
-</head>
-<body style="margin: 0; overflow: hidden;">
+    <title>3D Model Viewer</title>
+    
+    <!-- Include model-viewer script -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  </head>
+  <body>
+    <h1>3D Model Viewer</h1>
 
-    <!-- Define an A-Frame scene with AR -->
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;">
-        <!-- 3D model without marker (appears directly in the scene) -->
-        <a-entity
-            gltf-model="url(https://github.com/Manobalproduction/smartwatch1/blob/main/model.glb)"
-            scale="1 1 1"
-            position="0 0 0"
-            rotation="0 180 0">
-        </a-entity>
+    <!-- Model Viewer -->
+    <model-viewer 
+      src="model.glb" 
+      alt="A 3D model" 
+      shadow-intensity="1" 
+      camera-controls 
+      auto-rotate>
+    </model-viewer>
 
-        <!-- Camera setup for AR -->
-        <a-entity camera></a-entity>
-    </a-scene>
-
-</body>
+  </body>
 </html>
