@@ -1,48 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>&lt;model-viewer&gt; example</title>
+    <title>Auto Open AR</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="demo-styles.css">
-    
-    <!-- The following libraries and polyfills are recommended to maximize browser support -->
-    <!-- NOTE: you must adjust the paths as appropriate for your project -->
-    
-    <!-- 💁 OPTIONAL: The :focus-visible polyfill removes the focus ring for some input types -->
-    <script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
-
-  </head> 
-<body>
-  <div id="card">
-    <!-- All you need to put beautiful, interactive 3D content on your site: -->
-    <model-viewer src="https://cdn.glitch.global/806d3d61-7dd1-4ebd-afde-b26ec18780a2/rings.glb?v=1735378714231"
-                  ios-src="https://cdn.glitch.global/806d3d61-7dd1-4ebd-afde-b26ec18780a2/rings.usdz?v=1735378707804"
-                  poster="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fposter-astronaut.png?v=1599079951717"
-                  alt="A 3D model of an astronaut"
-                  shadow-intensity="1"
-                  camera-controls
-                  auto-rotate ar>
-    </model-viewer>
-    <section class="attribution">
-      <span>
-        <h1>Astronaut</h1>
-        <span>By <a href="https://poly.google.com/view/dLHpzNdygsg" target="_blank">Poly</a></span>
-      </span>
-      <a class="cc" href="https://creativecommons.org/licenses/by/2.0/" target="_blank">
-        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg">
-        <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg">
-      </a>
-    </section>
-  </div>
-
-  <!-- 💁 Include both scripts below to support all browsers! -->
-
-  <!-- Loads <model-viewer> for modern browsers: -->
-  <script type="module"
-      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
-  </script>
-</body>
+    <script>
+      // Redirect to the AR file on page load
+      window.onload = () => {
+        // Detect the platform and redirect to appropriate AR file
+        const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (isiOS) {
+          // Redirect to the USDZ file for iOS
+          window.location.href = "https://cdn.glitch.global/806d3d61-7dd1-4ebd-afde-b26ec18780a2/rings.usdz?v=1735378707804";
+        } else {
+          // Redirect to the GLB file for Android/ARCore
+          window.location.href = "intent://arvr.google.com/scene-viewer/1.0?file=https://cdn.glitch.global/806d3d61-7dd1-4ebd-afde-b26ec18780a2/rings.glb?v=1735378714231#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;end;";
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <p>If you are not automatically redirected, your device may not support AR.</p>
+    <p>
+      <a href="https://cdn.glitch.global/806d3d61-7dd1-4ebd-afde-b26ec18780a2/rings.usdz?v=1735378707804" rel="ar">Open in AR for iOS</a>
+    </p>
+    <p>
+      <a href="intent://arvr.google.com/scene-viewer/1.0?file=https://cdn.glitch.global/806d3d61-7dd1-4ebd-afde-b26ec18780a2/rings.glb?v=1735378714231#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;end;" rel="ar">Open in AR for Android</a>
+    </p>
+  </body>
 </html>
