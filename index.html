@@ -3,101 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR Viewer</title>
+  <title>Direct AR Viewer</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-    }
-    model-viewer {
-      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
-    }
-    .HotspotAnnotation {
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 12px;
+      background: #f4f4f4;
     }
     #ar-button {
-      display: block;
-      margin: 10px auto;
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    #ar-button:hover {
-      background: #0056b3;
-    }
-    #ar-prompt {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
       display: none;
-    }
-    #ar-prompt img {
-      width: 40px;
     }
   </style>
 </head>
 <body>
-  <button id="ar-button">View in AR</button>
-  
   <model-viewer 
     src="https://cdn.glitch.me/806d3d61-7dd1-4ebd-afde-b26ec18780a2/nocarc.glb?v=1735921002547" 
     ar 
     ar-modes="webxr scene-viewer quick-look" 
     camera-controls 
     tone-mapping="neutral" 
-    poster="poster.webp" 
-    shadow-intensity="1.74" 
+    shadow-intensity="0.5" 
     exposure="1"
-    field-of-view="30deg"
     id="viewer">
-    
-    <!-- Hotspots and other content remain unchanged -->
-    <div class="progress-bar hide" slot="progress-bar">
-      <div class="update-bar"></div>
-    </div>
-    <div id="ar-prompt">
-      <img src="https://modelviewer.dev/shared-assets/icons/hand.png">
-    </div>
   </model-viewer>
 
   <script>
-    const arButton = document.getElementById('ar-button');
     const modelViewer = document.getElementById('viewer');
 
-    arButton.addEventListener('click', () => {
+    // Wait for the model to load, then trigger AR directly
+    modelViewer.addEventListener('load', () => {
+      // Automatically trigger AR mode
       modelViewer.activateAR();
     });
 
-    let isZoomedIn = false;
-    let defaultCameraOrbit = modelViewer.getAttribute('camera-orbit');
-
-    modelViewer.addEventListener('click', (event) => {
-      const hotspot = event.target.closest('.Hotspot');
-      if (hotspot) {
-        const position = hotspot.getAttribute('data-position');
-        if (!isZoomedIn) {
-          modelViewer.cameraOrbit = position.replace(/m/g, '') + ' 1m';
-          modelViewer.fieldOfView = '15deg';
-          isZoomedIn = true;
-        } else {
-          modelViewer.cameraOrbit = defaultCameraOrbit;
-          modelViewer.fieldOfView = '30deg';
-          isZoomedIn = false;
-        }
-      }
-    });
+    // Ensure AR button remains hidden (failsafe for older devices)
+    modelViewer.setAttribute('ar-button', 'none');
   </script>
 </body>
 </html>
