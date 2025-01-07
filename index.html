@@ -1,48 +1,61 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Direct AR Viewer</title>
+  <title>AR Laptop Viewer</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    }
+    model-viewer {
+      width: 100%;
       height: 100vh;
-      background: #f4f4f4;
     }
     #ar-button {
-      display: none;
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #ar-button:hover {
+      background: #0056b3;
     }
   </style>
 </head>
 <body>
+  <button id="ar-button">View in AR</button>
+  
   <model-viewer 
-    src="https://cdn.glitch.me/806d3d61-7dd1-4ebd-afde-b26ec18780a2/nocarc.glb?v=1735921002547" 
+    src="device.glb" 
+    ios-src="device.usdz"
     ar 
     ar-modes="webxr scene-viewer quick-look" 
     camera-controls 
     tone-mapping="neutral" 
-    shadow-intensity="0.5" 
+    poster="poster.webp" 
+    shadow-intensity="1.74" 
     exposure="1"
+    field-of-view="30deg"
     id="viewer">
   </model-viewer>
 
   <script>
+    const arButton = document.getElementById('ar-button');
     const modelViewer = document.getElementById('viewer');
 
-    // Wait for the model to load, then trigger AR directly
-    modelViewer.addEventListener('load', () => {
-      // Automatically trigger AR mode
+    // Add event listener for "View in AR" button
+    arButton.addEventListener('click', () => {
       modelViewer.activateAR();
     });
-
-    // Ensure AR button remains hidden (failsafe for older devices)
-    modelViewer.setAttribute('ar-button', 'none');
   </script>
 </body>
 </html>
